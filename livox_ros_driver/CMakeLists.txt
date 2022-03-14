@@ -82,10 +82,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-## make sure the livox_sdk_static library is installed
-find_library(LIVOX_SDK_LIBRARY liblivox_sdk_static.a /usr/local/lib)
-
-if((NOT LIVOX_SDK_LIBRARY) OR (NOT EXISTS ${LIVOX_SDK_LIBRARY}))
+if (NOT EXISTS ${LIVOX_SDK_LIBRARY})
 	# couldn't find the livox sdk library
 	message("Coudn't find livox sdk library!")
 	message("Download Livox-SDK from github and build&install it please!")
@@ -93,18 +90,6 @@ if((NOT LIVOX_SDK_LIBRARY) OR (NOT EXISTS ${LIVOX_SDK_LIBRARY}))
 	message("Download Livox-SDK from github and build&install it please!")
 
 	message("git clone Livox-SDK from github temporarily, only for ROS distro jenkins build!")
-
-	# clone livox sdk source code from github
-	execute_process(COMMAND rm -rf ${CMAKE_CURRENT_SOURCE_DIR}/Livox-SDK OUTPUT_VARIABLE cmd_res)
-	message("Try to pull the livox sdk source code from github")
-	FOREACH(res ${cmd_res})
-		MESSAGE(${res})
-	ENDFOREACH()
-
-	execute_process(COMMAND git clone https://github.com/Livox-SDK/Livox-SDK.git ${CMAKE_CURRENT_SOURCE_DIR}/Livox-SDK OUTPUT_VARIABLE cmd_res)
-	FOREACH(res ${cmd_res})
-		MESSAGE(${res})
-	ENDFOREACH()
 
 	execute_process(COMMAND cmake .. WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Livox-SDK/build OUTPUT_VARIABLE cmd_res)
 	FOREACH(res ${cmd_res})
