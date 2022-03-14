@@ -1,7 +1,1 @@
-
-# ignore dir or file
-CMakeLists.txt
-#whitelist
-
-
-
+/build
